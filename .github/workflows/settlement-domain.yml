@@ -1,0 +1,26 @@
+name: Settlement domain tests
+
+on:
+  push:
+    paths:
+      - "app/settlement-domain/**"
+      - ".github/workflows/settlement-domain.yml"
+  pull_request:
+    paths:
+      - "app/settlement-domain/**"
+      - ".github/workflows/settlement-domain.yml"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: app/settlement-domain
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.26.10"
+          cache-dependency-path: app/settlement-domain/go.mod
+      - run: go test ./...
+      - run: go test -race ./...
